@@ -1,19 +1,19 @@
-#include <cstdio>
-#include <cstdlib>
+#include<bits/stdc++.h>
 using namespace std;
-void Merge(int A[], int p, int q, int r)
+int A[10005];
+void Merge(int A[], int l, int mid, int r)
 {
 	int *L, *R,x,y;
-	x=q-p+1,y=r-q;
+	x=mid-l+1,y=r-mid;
 	L = (int*)malloc(sizeof(int)*x);
 	R = (int*)malloc(sizeof(int)*y);
 	int i ,j;
 	for (i=0; i <x; i++)
-		L[i] = A[i + p];
+		L[i] = A[i + l];
 	for (j=0; j < y; j++)
-		R[j] = A[j + q + 1];
+		R[j] = A[j + mid + 1];
 	i = j = 0;
-	int k = p;
+	int k = l;
 	while (i <x && j <y)
 	{
 		if (L[i] <= R[j])
@@ -29,25 +29,30 @@ void Merge(int A[], int p, int q, int r)
 	free(R);
 }
 
-int MergeSort(int A[],int p,int r)	// µÝ¹é·Ö×éº¯Êý
+int MergeSort(int A[],int l,int r)	// é€’å½’åˆ†ç»„å‡½æ•°
 {
-	if (p < r)
+	if (l < r)
 	{
-		int q = (p + r) / 2;
-		MergeSort(A,p, q);
-		MergeSort(A,q + 1, r);
-		Merge(A,p, q, r);// µ÷ÓÃMergeº¯Êý£¬ºÏ²¢Á½×éÊý¾Ý
+		int mid = (l + r) / 2;
+		MergeSort(A,l, mid);
+		MergeSort(A,mid + 1, r);
+		Merge(A,l, mid, r);// è°ƒç”¨Mergeå‡½æ•°ï¼Œåˆå¹¶ä¸¤ç»„æ•°æ®
 	}
 }
 
 int main()
 {
-    int A[10]={3,4,2,6,5,7,8,1,9,10};
-    MergeSort(A,0,9);
-    for(int i=0;i<10;i++)
+    int n;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+    	scanf("%d",&A[i]);
+	}
+    MergeSort(A,0,n-1);
+    for(int i=0;i<n;i++)
     {
-        printf("%d\n",A[i]);
+        printf("%d ",A[i]);
     }
+    puts("");
     return 0;
 }
 
