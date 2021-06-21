@@ -5,19 +5,19 @@ using namespace std;
 
 #define MAXN 105
 
-// ÎïÆ·ÖØÁ¿
+// ç‰©å“é‡é‡
 int w[MAXN];
 
-// ×î´óÔØÖØÁ¿
+// æœ€å¤§è½½é‡é‡
 int c;
 
-// µ±Ç°×îÓÅ½â
+// å½“å‰æœ€ä¼˜è§£
 int bestw = -1;
 
-// ½á¹û¼ÇÂ¼Êı×é
+// ç»“æœè®°å½•æ•°ç»„
 bool res[MAXN];
 
-// ¼ÆËãµ±Ç°ËùÑ¡ÎïÆ·µÄs×ÜÖØÁ¿
+// è®¡ç®—å½“å‰æ‰€é€‰ç‰©å“çš„sæ€»é‡é‡
 int sum(int pos,int n){
     int tmp = 0;
     for(int i = 1;i <= n;i++){
@@ -28,14 +28,14 @@ int sum(int pos,int n){
     return tmp;
 }
 
-// Ô¼Êøº¯Êı
+// çº¦æŸå‡½æ•°
 bool constrain(int pos,int n){
     return sum(pos,n) > c ? false : true;
 }
 
-// ÏŞ½çº¯Êı
+// é™ç•Œå‡½æ•°
 bool bound(int pos,int n){
-    //¼ÆËãµ±Ç°Ã»ÓĞ¼ì²éµÄÎïÆ·µÄ×ÜÖØÁ¿
+    //è®¡ç®—å½“å‰æ²¡æœ‰æ£€æŸ¥çš„ç‰©å“çš„æ€»é‡é‡
     int tmp = 0;
     for(int i = pos+1;i <= n;i++){
         tmp += w[i];
@@ -44,42 +44,42 @@ bool bound(int pos,int n){
     return sum(pos,n) + tmp > bestw ? true : false;
 }
 
-// µİ¹é·¨Çó½â×î´ó×°ÔØÎÊÌâ
+// é€’å½’æ³•æ±‚è§£æœ€å¤§è£…è½½é—®é¢˜
 void LoadingTraceback(int pos,int n){
-    // ¿ÉĞĞ½â
+    // å¯è¡Œè§£
     if(pos>n){
         bestw = sum(n, n);
     }else{
-        // ×óº¢×Ó£¬Ñ¡
+        // å·¦å­©å­ï¼Œé€‰
         res[pos] = 1;
-        // ¼ÙÈçÂú×ãÔ¼Êø£¬ÄÇ¾Í¼ÌĞø
+        // å‡å¦‚æ»¡è¶³çº¦æŸï¼Œé‚£å°±ç»§ç»­
         if(constrain(pos,n)){
             LoadingTraceback(pos+1, n);
-            // ×¢Òâ£¬»ØËİÖ®ºóÒªÖÃÎª²»Ñ¡
+            // æ³¨æ„ï¼Œå›æº¯ä¹‹åè¦ç½®ä¸ºä¸é€‰
             //res[pos] = 0;
         }
         
-        // ÓÒº¢×Ó£¬²»Ñ¡
+        // å³å­©å­ï¼Œä¸é€‰
         res[pos] = 0;
-        // ¼ÙÈçÂú×ãÏŞ½ç£¬ÄÇ¾Í¼ÌĞø
+        // å‡å¦‚æ»¡è¶³é™ç•Œï¼Œé‚£å°±ç»§ç»­
         if(bound(pos,n)){
             LoadingTraceback(pos+1, n);
         }
     }
 }
 
-// µü´ú·¨Çó½â×î´ó×°ÔØÎÊÌâ
+// è¿­ä»£æ³•æ±‚è§£æœ€å¤§è£…è½½é—®é¢˜
 void LoadingIterate(int pos,int n){
     int f[n+1];
     for(int i = 0;i <= n;i++)
         f[i] = 1;
     while(pos > 0){
         for(;f[pos] <= 2;f[pos]++){
-            // ×ó×ÓÊ÷
+            // å·¦å­æ ‘
             if(f[pos] == 1){
                 res[pos] = 1;
                 if(constrain(pos, n)){
-                    // ¿ÉĞĞ½â
+                    // å¯è¡Œè§£
                     if(pos == n){
                         bestw = sum(n, n);
                     }else{
@@ -87,10 +87,10 @@ void LoadingIterate(int pos,int n){
                         f[pos] = 0;
                     }
                 }
-            }else{// ÓÒ×ÓÊ÷
+            }else{// å³å­æ ‘
                 res[pos] = 0;
                 if(bound(pos, n)){
-                    // ¿ÉĞĞ½â
+                    // å¯è¡Œè§£
                     if(pos == n){
                         bestw = sum(n, n);
                     }else{
@@ -106,7 +106,7 @@ void LoadingIterate(int pos,int n){
 }
 
 int main(){
-    // ³õÊ¼»¯ÎïÆ·ÖØÁ¿
+    // åˆå§‹åŒ–ç‰©å“é‡é‡
     memset(w, 0, sizeof(w));
     
     w[1] = 20;
@@ -125,3 +125,31 @@ int main(){
     cout<<bestw<<endl;
 }
 
+#include<bits/stdc++.h>
+using namespace std;
+const int maxn=1e4+10;
+int dp[maxn];
+int w[maxn];
+void run(){
+    int c1,c2,n;
+    int sum=0;
+    scanf("%d%d",&c1,&c2);
+    scanf("%d",&n);
+    for(int i=1;i<=n;i++){
+        scanf("%d",&w[i]);
+        sum+=w[i];
+    }
+    for(int i=1;i<=n;i+++){
+        for(int j=c1;j>=w[i];j--){
+            dp[j]=max(dp[j],dp[j-w[j]]+w[j]);
+        }
+    }
+    if(sum-dp[c1]>c2){
+        cout<<"NO"<<endl;
+    }
+    else cout<<"YES"<<endl;
+}
+int main(){
+    run();
+    return 0;
+}
